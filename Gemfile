@@ -14,12 +14,12 @@ end
 #gem 'sqlite3'
 
 group :development do
-	gem 'rspec-rails'
+	gem 'rspec-rails', '2.6.1.beta1'
+  gem 'annotate'
 end
 
 group :test do
-	gem 'rspec-rails'
-	gem 'rspec'
+	gem 'rspec', '2.6'
 	gem 'webrat'
 end
 # Gems used only for assets and not required
