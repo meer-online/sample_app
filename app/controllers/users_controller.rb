@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :admin_user, :only => :destroy
   def index
   	@title = "All users"
-  	@users = User.paginate(:page => params[:page]).per 10
+  	@users = User.paginate(:page => params[:page], :per_page => 10)
   end
 
   def new
@@ -47,9 +47,16 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User Destroyed"
-    redirect_to users_path
+    user_to_destroy = User.find(params[:id])
+    if user_to_destroy.id == current_user.id
+      flash[:success] = "Admin user cannot delete themselves"
+      redirect_to users_path
+    else     
+      #User.find(params[:id]).destroy
+      user_to_destroy.destroy
+      flash[:success] = "User #{user_to_destroy.name} Deleted"
+      redirect_to users_path
+    end
   end
 
   private
